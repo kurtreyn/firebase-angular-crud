@@ -15,6 +15,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { StudentListComponent } from './components/student-list/student-list.component';
+import { StudentFormComponent } from './components/student-form/student-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     RegisterComponent,
     DashboardComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    StudentListComponent,
+    StudentFormComponent
   ],
   imports: [
     BrowserModule,
