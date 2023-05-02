@@ -10,29 +10,33 @@ export class AuthService {
 
   constructor(private fireauth: AngularFireAuth, private router: Router) { }
 
-  // login method
+
   login(email: string, password: string) {
-    this.fireauth.signInWithEmailAndPassword(email, password).then(() => {
+    this.fireauth.signInWithEmailAndPassword(email, password).then((res) => {
       localStorage.setItem('token', 'true')
-      this.router.navigate(['/dashboard'])
+      if (res.user?.emailVerified === true) {
+        this.router.navigate(['/dashboard'])
+      } else {
+        this.router.navigate(['/verify-email'])
+      }
     }, err => {
       alert('Something went wring' + err.message)
       this.router.navigate(['/login'])
     })
   }
 
-  // register method
   register(email: string, password: string) {
-    this.fireauth.createUserWithEmailAndPassword(email, password).then(() => {
+    this.fireauth.createUserWithEmailAndPassword(email, password).then((res) => {
       alert('Registration successful')
       this.router.navigate(['/login'])
+      this.sendEmailForVerification(res.user)
     }, err => {
       alert('Something went wring')
       this.router.navigate(['/register'])
     })
   }
 
-  // signout method
+
   logout() {
     this.fireauth.signOut().then(() => {
       localStorage.removeItem('token')
@@ -40,6 +44,23 @@ export class AuthService {
     }, err => {
       alert('Something went wring' + err.message)
     })
+  }
 
+  forgotPassword(email: string) {
+    this.fireauth.sendPasswordResetEmail(email).then(() => {
+      alert('Password reset link sent')
+      this.router.navigate(['/verify-email'])
+    }, err => {
+      alert('Something went wring' + err.message)
+      this.router.navigate(['/forgot-password'])
+    })
+  }
+
+  sendEmailForVerification(user: any) {
+    user.sendEmailVerification().then((res: any) => {
+      this.router.navigate(['/verify-email'])
+    }, (err: any) => {
+      alert('Something went wring' + err.message)
+    })
   }
 }
