@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "student-management-syste-a51c5": {
+      "hosting": {
+        "firebase-angular-crud": [
+          "student-management-syste-a51c5"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "student-management-syste-a51c5"
+  }
+}
